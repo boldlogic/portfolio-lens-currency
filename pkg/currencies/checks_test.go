@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewCurrencyCode(t *testing.T) {
+func TestParseCurrencyCode(t *testing.T) {
 	tests := []struct {
 		name string
 		in   string
@@ -19,12 +19,12 @@ func TestNewCurrencyCode(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := NewCurrencyCode(tt.in)
+			got, err := ParseCurrencyCode(tt.in)
 			if err != nil {
-				t.Fatalf("NewCurrencyCode(%q) вернула ошибку: %v", tt.in, err)
+				t.Fatalf("ParseCurrencyCode(%q) вернула ошибку: %v", tt.in, err)
 			}
 			if got != tt.want {
-				t.Fatalf("NewCurrencyCode(%q) = %q, ожидали %q", tt.in, got, tt.want)
+				t.Fatalf("ParseCurrencyCode(%q) = %q, ожидали %q", tt.in, got, tt.want)
 			}
 		})
 	}

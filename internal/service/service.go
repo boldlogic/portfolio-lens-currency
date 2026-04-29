@@ -51,7 +51,7 @@ func New(currencies CurrencyRepository, rates RateRepository) (*Service, error) 
 }
 
 func (s *Service) GetCurrency(ctx context.Context, code string) (currency.Currency, error) {
-	currencyCode, err := currencies.NewCurrencyCode(code)
+	currencyCode, err := currencies.ParseCurrencyCode(code)
 	if err != nil {
 		return currency.Currency{}, err
 	}
@@ -85,12 +85,12 @@ func (s *Service) Convert(ctx context.Context, amount, from, to string, at *time
 		return ConversionResult{}, fmt.Errorf("проверить сумму: %w", rate.ErrInvalidRate)
 	}
 
-	fromCode, err := currencies.NewCurrencyCode(from)
+	fromCode, err := currencies.ParseCurrencyCode(from)
 	if err != nil {
 		return ConversionResult{}, err
 	}
 
-	toCode, err := currencies.NewCurrencyCode(to)
+	toCode, err := currencies.ParseCurrencyCode(to)
 	if err != nil {
 		return ConversionResult{}, err
 	}

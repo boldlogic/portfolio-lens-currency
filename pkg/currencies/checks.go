@@ -14,8 +14,8 @@ var (
 	ErrNotExistingCurrency = errors.New("валюта не существует в ISO 4217")
 )
 
-// NewCurrencyCode нормализует и проверяет символьный код валюты по ISO 4217.
-func NewCurrencyCode(charCode string) (CurrencyCode, error) {
+// ParseCurrencyCode нормализует и проверяет символьный код валюты по ISO 4217.
+func ParseCurrencyCode(charCode string) (CurrencyCode, error) {
 	code := normalizeCurrencyCode(charCode)
 	if err := validateNormalizedCurrencyCode(code); err != nil {
 		return "", err
@@ -25,7 +25,7 @@ func NewCurrencyCode(charCode string) (CurrencyCode, error) {
 
 // CheckCurrencyCode проверяет, что код валюты корректен и существует в ISO 4217.
 func CheckCurrencyCode(charCode string) error {
-	_, err := NewCurrencyCode(charCode)
+	_, err := ParseCurrencyCode(charCode)
 	return err
 }
 
@@ -36,18 +36,18 @@ func (c CurrencyCode) String() string {
 
 // Validate проверяет корректность значения CurrencyCode.
 func (c CurrencyCode) Validate() error {
-	_, err := NewCurrencyCode(c.String())
+	_, err := ParseCurrencyCode(c.String())
 	return err
 }
 
 // NewCurrencyPair создает валютную пару и проверяет оба кода валют.
 func NewCurrencyPair(base, quote string) (CurrencyPair, error) {
-	baseCode, err := NewCurrencyCode(base)
+	baseCode, err := ParseCurrencyCode(base)
 	if err != nil {
 		return CurrencyPair{}, fmt.Errorf("проверить базовую валюту: %w", err)
 	}
 
-	quoteCode, err := NewCurrencyCode(quote)
+	quoteCode, err := ParseCurrencyCode(quote)
 	if err != nil {
 		return CurrencyPair{}, fmt.Errorf("проверить валюту котировки: %w", err)
 	}

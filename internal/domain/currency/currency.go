@@ -27,7 +27,7 @@ type NewCurrencyInput struct {
 }
 
 func NewCurrency(input NewCurrencyInput) (Currency, error) {
-	code, err := currencies.NewCurrencyCode(input.Code)
+	code, err := currencies.ParseCurrencyCode(input.Code)
 	if err != nil {
 		return Currency{}, err
 	}
